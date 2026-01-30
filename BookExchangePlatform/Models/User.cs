@@ -29,8 +29,7 @@ namespace BookExchangePlatform.Models
 
         public string FullName => $"{FirstName} {LastName}";
 
-        //Navigation properties
-        public ICollection<Book> Books { get; set; } = new List<Book>();
-        public ICollection<ExchangeBook> ExchangeBooks { get; set; } = new List<ExchangeBook>();
+        //Navigation properties       
+        public ICollection<ExchangeBook> RequestedExchanges { get; set; } = new List<ExchangeBook>();
     }
 }
