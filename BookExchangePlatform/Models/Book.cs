@@ -25,15 +25,16 @@ namespace BookExchangePlatform.Models
 
         [Required]
         public string Condition { get; set; } = "Good";
-        [Required]
+
         public bool IsAvailable { get; set; } = true;
 
         [Required]
-        public DateTime DateOfPublishing { get; set; } = DateTime.UtcNow;
-
+        public DateTime DateOfPublishing { get; set; } = DateTime.Now;
 
         //Navigation properties
-        [Required]
+
+        [Required(ErrorMessage = "Please select an owner")]
+        [Display(Name = "Owner")]
         public int OwnerId { get; set; }
 
         

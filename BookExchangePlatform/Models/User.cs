@@ -31,5 +31,7 @@ namespace BookExchangePlatform.Models
 
         //Navigation properties       
         public ICollection<ExchangeBook> RequestedExchanges { get; set; } = new List<ExchangeBook>();
+
+        public ICollection<Book> OwnedBooks { get; set; } = new List<Book>();
     }
 }

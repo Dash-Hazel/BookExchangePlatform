@@ -1,10 +1,14 @@
 ﻿using BookExchangePlatform.Models;
 using Microsoft.EntityFrameworkCore;
-
 namespace BookExchangePlatform.Data
 {
     public class BookExchangeDbContext: DbContext
     {
+        //This file may  need configuration in the future.
+        // TODO: Check if the Delete Behavior should be Restricted.
+        
+
+
         public BookExchangeDbContext(DbContextOptions<BookExchangeDbContext> options)
     : base(options) { }
 
@@ -43,6 +47,13 @@ namespace BookExchangePlatform.Data
                 .WithMany() 
                 .HasForeignKey(e => e.RequestedBookId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            
+            modelBuilder.Entity<Book>()
+             .HasOne(b => b.Owner)
+              .WithMany(u => u.OwnedBooks) 
+             .HasForeignKey(b => b.OwnerId)
+             .OnDelete(DeleteBehavior.Restrict);
         }
 
 
