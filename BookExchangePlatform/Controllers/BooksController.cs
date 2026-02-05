@@ -47,6 +47,7 @@ namespace BookExchangePlatform.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Book book)
         {            
 

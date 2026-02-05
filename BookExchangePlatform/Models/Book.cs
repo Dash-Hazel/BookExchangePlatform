@@ -9,14 +9,17 @@ namespace BookExchangePlatform.Models
         public int Id { get; set; }
 
         [Required]
+        [MinLength(ValidationConstants.TitleMinLength)]
         [MaxLength(ValidationConstants.TitleMaxLength)]
         public string Title { get; set; } = null!;
 
         [Required]
+        [MinLength(ValidationConstants.AuthorMinLength)]
         [MaxLength(ValidationConstants.AuthorMaxLength)]
         public string Author { get; set; } = null!;
 
         [Required]
+        [MinLength(ValidationConstants.DescriptionMinLength)]
         [MaxLength(ValidationConstants.DescriptionMaxLength)]
         public string Description { get; set; } = null!;
 
