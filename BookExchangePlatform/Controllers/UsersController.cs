@@ -1,6 +1,7 @@
 ﻿using BookExchangePlatform.Data;
-using Microsoft.AspNetCore.Mvc;
 using BookExchangePlatform.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookExchangePlatform.Controllers
 {
@@ -16,6 +17,8 @@ namespace BookExchangePlatform.Controllers
         public IActionResult Index()
         {
             var users = context.Users
+                .Include(u => u.OwnedBooks)
+                .Include(u => u.RequestedExchanges)
                 .ToList();
 
             return View(users);
@@ -36,7 +39,7 @@ namespace BookExchangePlatform.Controllers
                 context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View();
         }
 
         public IActionResult Details(int? id)
