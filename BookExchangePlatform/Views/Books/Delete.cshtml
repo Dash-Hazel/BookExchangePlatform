@@ -1,0 +1,31 @@
+﻿@model BookExchangePlatform.Models.Book
+
+<h1>Delete Book</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class=" card-title
+    ">
+@Model.Title
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            by @Model.Author
+        </h6>
+        <p class="card-text">
+            Description: @Model.Description
+        </p>
+        <p class="card-text">
+            Genre: @Model.Genre
+        </p>
+        <p class="card-text">
+            Condition: @Model.Condition
+        </p>
+        <p class="card-text">
+            Date of Publishing: @Model.DateOfPublishing.ToString("MMMM dd, yyyy")
+            </p>
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
