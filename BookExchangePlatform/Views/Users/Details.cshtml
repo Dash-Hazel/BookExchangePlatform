@@ -1,0 +1,80 @@
+﻿@model BookExchangePlatform.Models.User
+
+<h1>User Details</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class=" card-title
+">
+            @Model.FirstName @Model.LastName
+        </h5>
+        <div>   
+            <p>Email:</p> @Model.Email
+            <p>PhoneNumber:</p> @Model.PhoneNumber
+            <p>Address:</p> @Model.Location
+        </div>
+        <p class="card-text">
+            <b>Books Owned:</b>
+            @if (Model.OwnedBooks != null && Model.OwnedBooks.Any())
+            {
+                <div class ="list-group-item">
+                    @foreach (var book in Model.OwnedBooks)
+                    {
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                               <b>@book.Title  @book.Author</b>     
+                               
+                       
+                        <div class="text-muted small">
+                            Genre: @book.Genre | Condition: @book.Condition
+                        </div>
+                        <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                                class="btn btn-sm btn-outline-primary">View Book</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <span>No Books Owned</span>
+
+            }
+        </p>
+        <p class="card-text">
+            <b>Exchanges Made</b>
+            @if(Model.RequestedExchanges != null && Model.RequestedExchanges.Any())
+            {
+                <div class="list-group-item">
+                    @foreach (var request in Model.RequestedExchanges)
+                    {
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <b>@request.OfferedBook.Title  @request.OfferedBook.Author</b>
+
+
+                                <div class="text-muted small">
+                                    Genre: @request.OfferedBook.Genre | Condition: @request.OfferedBook.Condition
+                                </div>
+                                <a asp-controller="Books" asp-action="Details" asp-route-id="@request.Id">
+                                    class="btn btn-sm btn-outline-primary">View Book
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            }
+            else
+            {
+                <span>No Exchanges Made</span>
+            }            
+            
+)
+        </p>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+
+
+        
