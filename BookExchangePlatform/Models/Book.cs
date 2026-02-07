@@ -36,7 +36,7 @@ namespace BookExchangePlatform.Models
 
         //Navigation properties
 
-        [Required(ErrorMessage = "Please select an owner")]
+        [Required]
         [Display(Name = "Owner")]
         public int OwnerId { get; set; }
 

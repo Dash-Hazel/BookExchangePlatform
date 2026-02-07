@@ -85,19 +85,66 @@ namespace BookExchangePlatform.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Book book)
-        { 
+        {
+
+            if (book.OwnerId == 0)
+            {
+                var originalBook = context.Books.Find(id);
+                if (originalBook != null)
+                {
+                    book.OwnerId = originalBook.OwnerId;
+                }
+            }
+
+            ModelState.Remove("OwnerId");
+            ModelState.Remove("Owner");
+
+            Console.WriteLine($"After removal - ModelState.IsValid: {ModelState.IsValid}");
+
+
+
 
             if (book.Id != id)
             {
                 return NotFound();
             }
+           
 
             if (ModelState.IsValid)
             {
-                context.Update(book);
+                Book existingBook = context.Books
+                    .Where(b => b.Id == id)
+                    .FirstOrDefault();
+
+                if (existingBook == null)
+                {
+                    return NotFound();
+                }
+                
+                
+
+                existingBook.Title = book.Title;
+                existingBook.Author = book.Author;
+                existingBook.Description = book.Description;
+                existingBook.Genre = book.Genre;
+                existingBook.Condition = book.Condition;
+                existingBook.IsAvailable = book.IsAvailable;
+                existingBook.DateOfPublishing = book.DateOfPublishing;
+                existingBook.OwnerId = book.OwnerId;
                 context.SaveChanges();
                 return RedirectToAction(nameof(Index));
+
+            }
+
+            Console.WriteLine("Remaining errors after removal:");
+            foreach (var state in ModelState)
+            {
+                foreach (var error in state.Value.Errors)
+                {
+                    Console.WriteLine($"{state.Key}: {error.ErrorMessage}");
+                }
             }
 
             PopulateUsersDropdown();
