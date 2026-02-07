@@ -101,11 +101,6 @@ namespace BookExchangePlatform.Controllers
             ModelState.Remove("OwnerId");
             ModelState.Remove("Owner");
 
-            Console.WriteLine($"After removal - ModelState.IsValid: {ModelState.IsValid}");
-
-
-
-
             if (book.Id != id)
             {
                 return NotFound();
@@ -123,8 +118,6 @@ namespace BookExchangePlatform.Controllers
                     return NotFound();
                 }
                 
-                
-
                 existingBook.Title = book.Title;
                 existingBook.Author = book.Author;
                 existingBook.Description = book.Description;
@@ -136,15 +129,6 @@ namespace BookExchangePlatform.Controllers
                 context.SaveChanges();
                 return RedirectToAction(nameof(Index));
 
-            }
-
-            Console.WriteLine("Remaining errors after removal:");
-            foreach (var state in ModelState)
-            {
-                foreach (var error in state.Value.Errors)
-                {
-                    Console.WriteLine($"{state.Key}: {error.ErrorMessage}");
-                }
             }
 
             PopulateUsersDropdown();
