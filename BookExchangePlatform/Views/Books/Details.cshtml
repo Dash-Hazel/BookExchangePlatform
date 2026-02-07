@@ -1,5 +1,7 @@
 ﻿@model BookExchangePlatform.Models.Book
 
+@* There was a bug where it didn`t show the books owner *@
+
 <h1>Book Details</h1>
 <div class="card">
     <div class="card-body">
@@ -23,11 +25,12 @@
             <strong>Date of Publishing:</strong> @Model.DateOfPublishing.ToString("MMMM dd, yyyy")
         </p>
         <p class="card-text">
-            <strong>Owner:</strong> @(Model.Owner?.FullName ?? "No Owner")
+            <strong>Owner:</strong> @(Model.Owner?.FullName?? "No Owner")
         </p>
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
     </div>
+    -
 </div>
 
 
