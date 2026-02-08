@@ -5,6 +5,7 @@
 <h2>This action will permanently delete the user.</h2>
 
 <div>
+    @Html.AntiForgeryToken()
     <h3> 
         Name: @Model.FirstName @Model.LastName
     </h3>

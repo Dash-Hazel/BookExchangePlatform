@@ -61,6 +61,17 @@ namespace BookExchangePlatform.Controllers
             return View(user);
         }
 
+        public IActionResult Delete(int id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            User user = context.Users
+                .Where(u => u.Id == id)
+                .FirstOrDefault();
+            return View(user);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,7 +101,9 @@ namespace BookExchangePlatform.Controllers
         public IActionResult Edit(int? id)
         {
             if (id == null) return NotFound();
-            var user = context.Users.Find(id);
+            var user = context.Users
+                .Where(u => u.Id == id)
+                .FirstOrDefault();
             if (user == null) return NotFound();
             return View(user);
         }
