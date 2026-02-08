@@ -26,7 +26,7 @@
                 <td>@book.Author</td>
                 <td>@book.Genre</td>
                 <td>@book.Condition</td>
-                <td>@(book.Owner?.FullName ?? "No Owner")</td>
+                <td>@(book.Owner.FullName)</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-info">Details</a>
                     <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning">Edit</a>

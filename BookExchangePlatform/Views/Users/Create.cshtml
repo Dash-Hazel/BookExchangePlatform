@@ -1,6 +1,7 @@
 ﻿@model BookExchangePlatform.Models.User
 
 <h1>Create New User</h1>
+<h1>Be careful when adding personal information!</h1>
 <form asp-action="Create" method="post">
     @Html.AntiForgeryToken()
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
