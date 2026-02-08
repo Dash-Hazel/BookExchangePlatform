@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
 builder.Services.AddControllersWithViews();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BookExchangeDbContext>(options =>
@@ -18,33 +18,16 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<BookExchangeDbContext>();
 
-    // Ensure database is created
+
     dbContext.Database.EnsureCreated();
 
-    // Seed a user if none exists
-    if (!dbContext.Users.Any())
-    {
-        dbContext.Users.Add(new BookExchangePlatform.Models.User
-        {
-            FirstName = "Johnson",
-            LastName = "McCall",
-            Email = "test@test.com",
-            PhoneNumber = "1234567890",
-            Location = "Test City"
-        });
-        dbContext.SaveChanges();
-        Console.WriteLine("✅ Seed user created with ID: 1");
-    }
-}
+    
 
 
-
-
-    // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+
     app.UseHsts();
 }
 
