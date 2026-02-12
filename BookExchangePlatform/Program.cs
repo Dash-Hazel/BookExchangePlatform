@@ -17,10 +17,10 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<BookExchangeDbContext>();
 
- 
+    // Ensure database is created
     dbContext.Database.EnsureCreated();
 
-    // Seed
+    // Seed a user if none exists
     if (!dbContext.Users.Any())
     {
         dbContext.Users.Add(new BookExchangePlatform.Models.User
@@ -32,14 +32,18 @@ using (var scope = app.Services.CreateScope())
             Location = "Test City"
         });
         dbContext.SaveChanges();
-        Console.WriteLine("Seed user created with ID: 1");
+        Console.WriteLine("✅ Seed user created with ID: 1");
     }
 }
 
 
+
+
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
