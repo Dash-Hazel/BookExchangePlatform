@@ -1,0 +1,85 @@
+﻿@model BookExchangePlatform.Models.User
+
+@* An unfixed problem occured. Books were not shown when the 'Details' window was opened *@
+
+<h1>User Details</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class=" card-title
+">
+            @Model.FirstName @Model.LastName
+        </h5>
+        <div>   
+            <p>Email:</p> @Model.Email
+            <p>PhoneNumber:</p> @Model.PhoneNumber
+            <p>Address:</p> @Model.Location
+        </div>
+        <p class="card-text">
+            <b>Books Owned:</b>
+            @if (Model.Books != null)
+            {
+                <div class ="list-group-item">
+                    @foreach (var book in Model.Books)
+                    {
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                               <b>@book.Title  @book.Author</b>     
+                               
+                       
+                        <div class="text-muted small">
+                            Genre: @book.Genre | Condition: @book.Condition
+                        </div>
+                        <a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">
+                                class="btn btn-sm btn-outline-primary">View Book</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <span>No Books Owned</span>
+
+            }
+        </p>
+        <p class="card-text">
+            <b>Exchanges Made</b>
+            @if(Model.Movies != null)
+            {
+                <div class="list-group-item">
+                    @foreach (var movie in Model.Movies)
+                    {
+                        <div class="list-group-item">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <b>@movie.Title  @movie.Director</b>
+
+
+                                <div class="text-muted small">
+                                    Genre: @movie.Genre
+                                </div>
+                                <div class="text-muted small">
+                                    Genre: @movie.Resume
+                                </div>
+                                <a asp-controller="Books" asp-action="Details" asp-route-id="@movie.Id">
+                                    class="btn btn-sm btn-outline-primary">View Book
+                                </a>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            }
+            else
+            {
+                <span>No Publishes Yet</span>
+            }            
+            
+)
+        </p>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+
+
+        

@@ -1,0 +1,43 @@
+﻿@model BookExchangePlatform.Models.User
+
+
+<h1>Delete User</h1>
+<h2>This action will permanently delete the user.</h2>
+
+<div>
+    @Html.AntiForgeryToken()
+    <h3> 
+        Name: @Model.FirstName @Model.LastName
+    </h3>
+    <p> Email: @Model.Email</p>
+    <p> Location: @Model.Location</p>
+    <p> Books Owned:
+        @if(Model.Books != null && Model.Movies != null)
+        {
+            foreach (var book in Model.Books)
+            {
+                <div>
+                    <p>@book.Title by @book.Author</p>
+                </div>
+            }
+        }
+    </p>
+    <p>Movies Shared:
+        @if(Model.Movies != null)
+        {
+            foreach (var movie in Model.Movies)
+            {
+                <div>
+                    <p>@movie.Title by @movie.Director</p>
+                </div>
+            }
+        }
+    </p>
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+
+</div>
+
