@@ -71,9 +71,12 @@ Connection string (`appsettings.json`):
 "ConnectionStrings": {
   "DefaultConnection": "Server=localhost,1433;Database=PovPlatform;User Id=sa;Password=Ldeyvis123;TrustServerCertificate=True;"
 }
+```
+```
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
+
 
 ---
 #⚙️ Configuration
