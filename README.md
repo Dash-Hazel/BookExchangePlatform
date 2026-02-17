@@ -98,13 +98,14 @@ dotnet ef database update
 ---
 
 #📁 Project Structure
+text
 BookExchangePlatform/
 ├── Controllers/
 ├── Models/
 ├── Views/
 ├── Data/
 ├── Services/
-├── Services/Interfaces/
+│   └── Interfaces/
 ├── Areas/
 ├── wwwroot/
 ├── appsettings.json
@@ -180,4 +181,5 @@ Educational use only. All rights reserved.
 
 #📬 Contact
 GitHub: @Dash-Hazel
+
 Project Link: https://github.com/Dash-Hazel/BookExchangePlatform
