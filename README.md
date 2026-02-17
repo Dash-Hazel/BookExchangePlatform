@@ -1,6 +1,6 @@
 # 🚀 POV Platform
 
-> A personal content management platform where users can catalog and manage their own collections of books and movies.
+> A personal content management platform where users can catalog and manage their own collections of books and movies and share them with others. 
 
 ![.NET Version](https://img.shields.io/badge/.NET-10.0-purple)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-10.0-blue)
