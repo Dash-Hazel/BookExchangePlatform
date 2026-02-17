@@ -26,7 +26,7 @@
 
 ---
 
-## 📖 About the Project
+# 📖 About the Project
 
 **POV Platform** is a web application built with ASP.NET Core MVC that allows users to manage their personal collection of books and movies. Users can register, log in, and add, edit, view, and delete their own books and movies.
 
@@ -34,7 +34,7 @@ The project was developed as the final assignment for the **ASP.NET Fundamentals
 
 ---
 
-## 🔄 Why the Name Changed
+# 🔄 Why the Name Changed
 
 You might notice that the project is called **POV Platform**, but the code files still reference `BookExchangePlatform`. Here's why:
 
@@ -44,7 +44,7 @@ The core functionality remains intact, and the namespace was kept to avoid break
 
 ---
 
-## 🛠️ Technologies Used
+# 🛠️ Technologies Used
 
 - ASP.NET Core MVC 10.0
 - Entity Framework Core 10.0.3
@@ -55,7 +55,7 @@ The core functionality remains intact, and the namespace was kept to avoid break
 
 ---
 
-## ✅ Prerequisites
+# ✅ Prerequisites
 
 - [.NET SDK 10.0+](https://dotnet.microsoft.com/download)
 - [Visual Studio 2022](https://visualstudio.microsoft.com/)
@@ -64,7 +64,7 @@ The core functionality remains intact, and the namespace was kept to avoid break
 
 ---
 
-## 🗄️ Database Setup
+#🗄️ Database Setup
 
 Connection string (`appsettings.json`):
 ```json
@@ -76,7 +76,7 @@ dotnet ef database update
 ```
 
 ---
-##⚙️ Configuration
+#⚙️ Configuration
 ```json
 {
   "ConnectionStrings": {
@@ -94,7 +94,7 @@ dotnet ef database update
 
 ---
 
-##📁 Project Structure
+#📁 Project Structure
 BookExchangePlatform/
 ├── Controllers/
 ├── Models/
@@ -109,7 +109,7 @@ BookExchangePlatform/
 
 ---
 
-##✨ Features
+#✨ Features
 User registration and login (ASP.NET Core Identity with custom User model)
 
 Full CRUD operations for Books and Movies
@@ -128,7 +128,7 @@ Docker support for local SQL Server
 
 ---
 
-##💻 Usage
+#💻 Usage
 Register a new account (first and last name required).
 
 Log in with your credentials.
@@ -149,7 +149,7 @@ Log out when you're done.
 
 ---
 
-##🚀 Getting Started
+#🚀 Getting Started
 ```bash
 git clone https://github.com/Dash-Hazel/BookExchangePlatform.git
 cd BookExchangePlatform
@@ -165,16 +165,16 @@ dotnet run
 
 ---
 
-##🤝 Contributing
+#🤝 Contributing
 This project was developed as a final assignment for the ASP.NET Fundamentals course at SoftUni. It is not open for contributions, but feedback is welcome.
 
 ---
 
-##📄 License
+#📄 License
 Educational use only. All rights reserved.
 
 ---
 
-##📬 Contact
+#📬 Contact
 GitHub: @Dash-Hazel
 Project Link: https://github.com/Dash-Hazel/BookExchangePlatform
