@@ -27,7 +27,7 @@
 
 # 📖 About the Project
 
-**POV Platform** is a web application built with ASP.NET Core MVC that allows users to manage their personal collection of books and movies. Users can register, log in, and add, edit, view, and delete their own books and movies.
+**POV Platform** is a web application built with ASP.NET Core MVC that allows users to manage their personal collection of books and movies adn brose through others reccomended books and movies. Users can register, log in, and add, edit, view, and delete their own books and movies.
 
 The project was developed as the final assignment for the **ASP.NET Fundamentals course at SoftUni**.
 
