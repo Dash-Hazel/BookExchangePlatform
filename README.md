@@ -98,7 +98,7 @@ dotnet ef database update
 ---
 
 #📁 Project Structure
-text
+```text
 BookExchangePlatform/
 ├── Controllers/
 ├── Models/
@@ -110,7 +110,7 @@ BookExchangePlatform/
 ├── wwwroot/
 ├── appsettings.json
 └── Program.cs
-
+```
 ---
 
 #✨ Features
