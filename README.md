@@ -14,12 +14,12 @@
 - [Why the Name Changed](#why-the-name-changed)
 - [Technologies Used](#technologies-used)
 - [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
+- [Database Setup](#database-setup)
+- [Configuration](#configuration)
 - [Project Structure](#project-structure)
 - [Features](#features)
 - [Usage](#usage)
-- [Database Setup](#database-setup)
-- [Configuration](#configuration)
+- [Getting Started](#getting-started)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -64,24 +64,34 @@ The core functionality remains intact, and the namespace was kept to avoid break
 
 ---
 
-## 🚀 Getting Started
+## 🗄️ Database Setup
 
-```bash
-git clone https://github.com/Dash-Hazel/BookExchangePlatform.git
-cd BookExchangePlatform
+Connection string (`appsettings.json`):
 
-docker run -d --name sqlserver -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Ldeyvis123" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
-
-dotnet restore
+"ConnectionStrings": {
+  "DefaultConnection": "Server=localhost,1433;Database=PovPlatform;User Id=sa;Password=Ldeyvis123;TrustServerCertificate=True;"
+}
+dotnet ef migrations add InitialCreate
 dotnet ef database update
-dotnet run
 
-The app will be available at https://localhost:5001 or http://localhost:5000.
+---
+##⚙️ Configuration
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost,1433;Database=PovPlatform;User Id=sa;Password=Ldeyvis123;TrustServerCertificate=True;"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+}
+⚠️ Never commit real passwords to source control. The password above is for local Docker use only.
 
-💡 If you're using Visual Studio, you can run Update-Database in the Package Manager Console instead of dotnet ef database update
+---
 
 ##📁 Project Structure
-text
 BookExchangePlatform/
 ├── Controllers/
 ├── Models/
@@ -93,6 +103,8 @@ BookExchangePlatform/
 ├── wwwroot/
 ├── appsettings.json
 └── Program.cs
+
+---
 
 ##✨ Features
 User registration and login (ASP.NET Core Identity with custom User model)
@@ -110,6 +122,8 @@ Responsive UI with Bootstrap
 SQL Server with Entity Framework Core (Code First)
 
 Docker support for local SQL Server
+
+---
 
 ##💻 Usage
 Register a new account (first and last name required).
@@ -130,45 +144,31 @@ Log out when you're done.
 
 💡 Only logged‑in users can see the Books and Movies sections.
 
-##🗄️ Database Setup
-Connection string (appsettings.json):
-"ConnectionStrings": {
-  "DefaultConnection": "Server=localhost,1433;Database=PovPlatform;User Id=sa;Password=Ldeyvis123;TrustServerCertificate=True;"
-}
+---
 
-Apply migrations:
-dotnet ef migrations add InitialCreate
-dotnet ef database update#
+##🚀 Getting Started
+git clone https://github.com/Dash-Hazel/BookExchangePlatform.git
+cd BookExchangePlatform
 
-The database includes:
+docker run -d --name sqlserver -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Ldeyvis123" -p 1433:1433 mcr.microsoft.com/mssql/server:2022-latest
 
-AspNetUsers (extended with FirstName and LastName)
+dotnet restore
+dotnet ef database update
+dotnet run
 
-Books with OwnerId foreign key to AspNetUsers
+💡 If you're using Visual Studio, you can run Update-Database in the Package Manager Console instead of dotnet ef database update.
 
-Movies with OwnerId foreign key to AspNetUsers
-
-All standard Identity tables
-
-##⚙️ Configuration
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost,1433;Database=PovPlatform;User Id=sa;Password=Ldeyvis123;TrustServerCertificate=True;"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  }
-}
-⚠️ Never commit real passwords to source control. The password above is for local Docker use only.
+---
 
 ##🤝 Contributing
 This project was developed as a final assignment for the ASP.NET Fundamentals course at SoftUni. It is not open for contributions, but feedback is welcome.
 
+---
+
 ##📄 License
 Educational use only. All rights reserved.
+
+---
 
 ##📬 Contact
 GitHub: @Dash-Hazel
