@@ -21,7 +21,7 @@ namespace BookExchangePlatform.Models
         public string Director { get; set; } = null!;
 
         [Required]
-        public DateOnly ReleaseYear { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateTime ReleaseYear { get; set; } = DateTime.Now;
 
         [Required]
         [MinLength(ValidationConstants.GenreMinLength)]
@@ -34,7 +34,7 @@ namespace BookExchangePlatform.Models
         public string Resume { get; set; } = null!;
 
         [Required]
-        public int OwnerId { get; set; }
+        public string OwnerId { get; set; } = null!;
 
         [ForeignKey("OwnerId")]
         public User Owner { get; set; } = null!;

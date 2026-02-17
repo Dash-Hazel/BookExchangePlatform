@@ -1,13 +1,42 @@
-using System.Diagnostics;
+using BookExchangePlatform.Data;
 using BookExchangePlatform.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace BookExchangePlatform.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+
+        private readonly BookExchangeDbContext currContext;
+
+        public HomeController(BookExchangeDbContext context)
         {
+            currContext = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var viewModel = new HomeView
+                {
+                    BookCount = await currContext.Books.CountAsync(),
+                    MovieCount = await currContext.Movies.CountAsync(),
+
+                    Books = await currContext.Books
+                    .Include(b => b.Owner)
+                    .OrderByDescending(b => b.Title)
+                    .ToListAsync(),
+
+                    Movies = await currContext.Movies
+                    .Include(b => b.Owner)
+                    .OrderByDescending(b => b.Title)
+                    .ToListAsync()
+                };
+                return View(viewModel);
+            }
             return View();
         }
 

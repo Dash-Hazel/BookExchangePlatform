@@ -1,8 +1,11 @@
-﻿using BookExchangePlatform.Models;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using BookExchangePlatform.Models;
+
 namespace BookExchangePlatform.Data
 {
-    public class BookExchangeDbContext : DbContext
+    public class BookExchangeDbContext : IdentityDbContext<User>
     {
         //This file may  need configuration in the future.
         // TODO: Check if the Delete Behavior should be Restricted.
@@ -10,10 +13,11 @@ namespace BookExchangePlatform.Data
 
 
         public BookExchangeDbContext(DbContextOptions<BookExchangeDbContext> options)
-    : base(options) { }
+    : base(options)
+        {
+        }
 
         public DbSet<Book> Books { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Movie> Movies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

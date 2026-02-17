@@ -1,24 +1,22 @@
-﻿using BookExchangePlatform.Common;
-using BookExchangePlatform.Data;
+﻿using BookExchangePlatform.Data;
 using BookExchangePlatform.Models;
+using BookExchangePlatform.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol.Providers;
-using BookExchangePlatform.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
+
 namespace BookExchangePlatform.Controllers
 {
-    public class BooksController : Controller
+    public class MoviesController : Controller
     {
-        private readonly IBookService currBookService;
+        private readonly IMovieService currMovieService;
         private readonly BookExchangeDbContext currContext;
 
-
-        public BooksController(IBookService bookService, BookExchangeDbContext context)
+        public MoviesController(IMovieService movieService, BookExchangeDbContext context)
         {
-            currBookService = bookService;
+            currMovieService = movieService;
             currContext = context;
         }
 
@@ -39,11 +37,10 @@ namespace BookExchangePlatform.Controllers
             ViewBag.Users = userList;
         }
 
-
         public async Task<IActionResult> Index()
         {
-            var books = await currBookService.GetAllBooksAsync();
-            return View(books);
+            var movies = await currMovieService.GetAllMoviesAsync();
+            return View(movies);
         }
 
         public IActionResult Create()
@@ -54,23 +51,23 @@ namespace BookExchangePlatform.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Book book)
+        public async Task<IActionResult> Create(Movie movie)
         {
             ModelState.Remove("Owner");
 
-            if (book.DateOfPublishing == default)
+            if (movie.ReleaseYear == default)
             {
-                book.DateOfPublishing = DateTime.Now;
+                movie.ReleaseYear = DateTime.Now;
             }
 
             if (ModelState.IsValid)
             {
-                await currBookService.CreateBookAsync(book);
+                await currMovieService.CreateMovieAsync(movie);
                 return RedirectToAction(nameof(Index));
             }
 
             PopulateUsersDropdown();
-            return View(book);
+            return View(movie);
         }
 
 
@@ -82,37 +79,37 @@ namespace BookExchangePlatform.Controllers
                 return NotFound();
             }
 
-            var book = await currBookService.GetBookByIdAsync(id.Value);
+            var movie = await currMovieService.GetMovieByIdAsync(id.Value);
 
-            if (book == null)
+            if (movie == null)
             {
                 return NotFound();
             }
 
             PopulateUsersDropdown();
-            return View(book);
+            return View(movie);
 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Book book)
+        public async Task<IActionResult> Edit(int id, Movie movie)
         {
 
-            if (id != book.Id)
+            if (id != movie.Id)
             {
                 return NotFound();
             }
 
             ModelState.Remove("OwnerId");
             ModelState.Remove("Owner");
-           
+
 
             if (ModelState.IsValid)
             {
-              var updatedBook = await currBookService.UpdateBookAsync(id, book);
+                var updatedMovie = await currMovieService.UpdateMovieAsync(id, movie);
 
-                if (updatedBook == null)
+                if (updatedMovie == null)
                 {
                     return NotFound();
                 }
@@ -120,7 +117,7 @@ namespace BookExchangePlatform.Controllers
             }
 
             PopulateUsersDropdown();
-            return View(book);
+            return View(movie);
 
         }
 
@@ -131,36 +128,35 @@ namespace BookExchangePlatform.Controllers
                 return NotFound();
             }
 
-            var book = await currBookService.GetBookWithOwnerAsync(id.Value);
+            var movie= await currMovieService.GetMovieWithOwnerAsync(id.Value);
 
-            if (book == null)
+            if (movie == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            return View(movie);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Console.WriteLine($"DeleteConfirmed HIT with id: {id}");
 
-            await currBookService.DeleteBookAsync(id);
+            await currMovieService.DeleteMovieAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Details(int? id)
-        {          
+        {
 
             if (id == null)
             {
                 return NotFound();
             }
 
-            var book = await currBookService.GetBookWithOwnerAsync(id.Value);
+            var book = await currMovieService.GetMovieWithOwnerAsync(id.Value);
 
             if (book == null)
             {
@@ -168,6 +164,5 @@ namespace BookExchangePlatform.Controllers
             }
             return View(book);
         }
-
     }
 }

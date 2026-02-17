@@ -1,27 +1,59 @@
 ﻿using BookExchangePlatform.Data;
 using BookExchangePlatform.Models;
+using BookExchangePlatform.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Linq;
 
 namespace BookExchangePlatform.Controllers
 {
+
     public class UsersController : Controller
     {
 
-        private readonly BookExchangeDbContext context;
-        public UsersController(BookExchangeDbContext context)
+        private readonly IUserService currUserService;
+        private readonly BookExchangeDbContext currContext;
+        private readonly UserManager<User> currUserManager;
+
+        public UsersController(IUserService userService, BookExchangeDbContext context, UserManager<User> userManager)
         {
-            this.context = context;
+            currUserService = userService;
+            currContext = context;
+            currUserManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var users = context.Users
-                .Include(u => u.Books)
-                .Include(u => u.Movies)
-                .ToList();
-
+           var users = await currUserService.GetAllUsersAsync();
             return View(users);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> MyPublications()
+        {
+
+
+            var currUserId = currUserManager.GetUserId(User);
+
+            var viewModel = new MyPublications
+            {
+                Books = await currContext.Books
+                    .Where(b => b.OwnerId == currUserId)
+                    .Include(b => b.Owner)
+                    .ToListAsync(),
+
+                Movies = await currContext.Movies
+                    .Where(b => b.OwnerId == currUserId)
+                    .Include(b => b.Owner)
+                    .ToListAsync(),
+
+
+            };
+            return View(viewModel);
+            
         }
 
         public IActionResult Create()
@@ -31,27 +63,24 @@ namespace BookExchangePlatform.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(User user)
+        public async Task<IActionResult> Create(User user)
         {
             if (ModelState.IsValid)
             {
-                context.Users.Add(user);
-                context.SaveChanges();
+                await currUserService.CreateUserAsync(user);
                 return RedirectToAction(nameof(Index));
             }
-            return View();
+            return View(user);
         }
 
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            User user = context.Users
-                .Where(u => u.Id == id)
-                .FirstOrDefault();
+            var user = await currUserService.GetUserWithDetailsAsync(id);
 
             if (user == null)
             {
@@ -61,56 +90,40 @@ namespace BookExchangePlatform.Controllers
             return View(user);
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            User user = context.Users
-                .Where(u => u.Id == id)
-                .FirstOrDefault();
+            var user = await currUserService.GetUserWithDetailsAsync(id);
             return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            User user = context.Users
-                .Where(u => u.Id == id)
-                .FirstOrDefault();
+            var deleedUser = await currUserService.DeleteUserAsync(id);
+            if (deleedUser == false) return NotFound();
 
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            context.Users
-                .Remove(user);
-            context.SaveChanges();
             return RedirectToAction(nameof(Index));
 
         }
 
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null) return NotFound();
-            var user = context.Users
-                .Where(u => u.Id == id)
-                .FirstOrDefault();
+            var user = await currUserService.GetUserByIdAsync(id);
             if (user == null) return NotFound();
+
             return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, User updatedUser)
+        public async Task<IActionResult> Edit(string id, User updatedUser)
         {
             if (id != updatedUser.Id)
             {
@@ -119,17 +132,9 @@ namespace BookExchangePlatform.Controllers
 
             if (ModelState.IsValid)
             {
-                var existingUser = context.Users
-                    .Where(e => e.Id == id)
-                    .FirstOrDefault();
-                if (existingUser == null) return NotFound();
-
-                existingUser.FirstName = updatedUser.FirstName;
-                existingUser.LastName = updatedUser.LastName;
-                existingUser.Email = updatedUser.Email;
-                existingUser.PhoneNumber = updatedUser.PhoneNumber;
-                existingUser.Location = updatedUser.Location;
-                context.SaveChanges();
+                
+                var updated = await currUserService.UpdateUserAsync(id, updatedUser);
+                if (updated == null) return NotFound();
                 return RedirectToAction(nameof(Index));
             }
 

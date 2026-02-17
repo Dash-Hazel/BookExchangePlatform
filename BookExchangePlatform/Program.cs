@@ -1,5 +1,8 @@
-﻿using BookExchangePlatform.Data;
+using BookExchangePlatform.Data;
+using BookExchangePlatform.Services;
+using BookExchangePlatform.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,12 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<BookExchangeDbContext>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddDefaultIdentity<BookExchangePlatform.Models.User>(options => options.SignIn.RequireConfirmedAccount = true)
+     .AddEntityFrameworkStores<BookExchangeDbContext>();
+
+builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+builder.Services.AddScoped<IUserService, UserService>();
 var app = builder.Build();
 
 
@@ -17,8 +26,6 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<BookExchangeDbContext>();
 
-
-    dbContext.Database.EnsureCreated();
 
     // Seed
     if (!dbContext.Users.Any())
@@ -29,7 +36,6 @@ using (var scope = app.Services.CreateScope())
             LastName = "McCall",
             Email = "test@test.com",
             PhoneNumber = "1234567890",
-            Location = "Test City"
         });
         dbContext.SaveChanges();
         Console.WriteLine("Seed user created with ID: 1");
@@ -50,7 +56,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseStaticFiles();
+
+app.UseAuthentication();
 app.UseAuthorization();
+app.MapRazorPages(); 
 
 app.MapStaticAssets();
 

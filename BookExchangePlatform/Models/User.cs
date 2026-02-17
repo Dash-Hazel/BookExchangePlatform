@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BookExchangePlatform.Common;
+using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Principal;
-using BookExchangePlatform.Common;
 namespace BookExchangePlatform.Models
 {
-    public class User
+    public class User: IdentityUser
     {
-        [Key]
-        public int Id { get; set; }
 
         [Required]
         [MinLength(ValidationConstants.FirstNameMinLength)]
@@ -18,16 +17,6 @@ namespace BookExchangePlatform.Models
         [MaxLength(ValidationConstants.LastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
-        [Required]
-        [MinLength(ValidationConstants.EmailMinLength)]
-        [MaxLength(ValidationConstants.EmailMaxLength)]
-        public string Email { get; set; } = null!;
-
-        [Required]
-        public string PhoneNumber { get; set; } = null!;
-
-        [Required]
-        public string Location { get; set; } = null!;
 
 
         public string FullName => $"{FirstName} {LastName}";

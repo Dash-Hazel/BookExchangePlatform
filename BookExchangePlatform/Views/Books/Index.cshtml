@@ -3,17 +3,16 @@
 <h1>Books</h1>
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="Create" class="btn btn-primary btn-outline-info">Create New</a>
 </p>
 
 
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>Title</th>
             <th>Author</th>
             <th>Genre</th>
-            <th>Condition</th>
             <th>Owner</th>
             <th>Actions</th>
         </tr>
@@ -25,13 +24,11 @@
                 <td>@book.Title</td>
                 <td>@book.Author</td>
                 <td>@book.Genre</td>
-                <td>@book.Condition</td>
                 <td>@(book.Owner.FullName)</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@book.Id" class="btn btn-info">Details</a>
-                    <a asp-action="Edit" asp-route-id="@book.Id" class="btn btn-warning">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@book.Id" class="btn btn-danger">Delete</a>
                 </td>
+              
             </tr>
         }
     </tbody>

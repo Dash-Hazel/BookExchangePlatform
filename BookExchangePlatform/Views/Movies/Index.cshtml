@@ -1,0 +1,42 @@
+﻿@model List<BookExchangePlatform.Models.Movie>
+
+<h1>Movies</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary btn-outline-info">Create New</a>
+</p>
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Director</th>
+            <th>Genre</th>
+            <th>ReleaseYear</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model)
+        {
+            <tr>
+                <td>@movie.Title</td>
+                <td>@movie.Director</td>
+                <td>@movie.Genre</td>
+                <td>@movie.ReleaseYear</td>
+                <td>@(movie.Owner.FullName)</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@movie.Id" class="btn btn-info">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        No movies found. <a asp-action="Create">Create the first movie</a>
+    </div>
+}

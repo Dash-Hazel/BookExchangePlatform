@@ -1,0 +1,95 @@
+﻿@model MyPublications
+@{
+    ViewData["Title"] = "My Publications";
+}
+@Html.AntiForgeryToken()
+<h2>My Publications</h2>
+<div class="row">
+    <div class="col-md-6">
+        <h4>Books</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Date of Publishing
+                    </th>
+                    <th>
+                        Action
+                        </th>
+                </tr>
+             
+            </thead>
+            <tbody>
+                @foreach (var book in Model.Books)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.Description</td>
+                        <td>@book.DateOfPublishing</td>
+                        <td><a asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" class="btn btn-sm btn-info">Details</a>
+                            <p></p>
+                            <a asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <p></p>
+                        <a asp-controller="Books" asp-action="Delete" asp-route-id="@book.Id" class="btn btn-sm btn-danger">Delete</a></td>
+                    </tr>
+                
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="col-md-6">
+        <h4>Movies</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Director
+                    </th>
+                    <th>
+                        Resume
+                    </th>
+                    <th>
+                        DateOfPublishing
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                    
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var movie in Model.Movies)
+                {
+                    <tr>
+                        <td>@movie.Title</td>
+                        <td>@movie.Director</td>
+                        <td>@movie.Resume</td>
+                        <td>@movie.ReleaseYear</td>
+                        <td><a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-sm btn-info">Details</a>
+                            <p></p>
+                        <a asp-controller="Movies" asp-action="Edit" asp-route-id="@movie.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <p></p>
+                        <a asp-controller="Movies" asp-action="Delete" asp-route-id="@movie.Id" class="btn btn-sm btn-danger">Delete</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

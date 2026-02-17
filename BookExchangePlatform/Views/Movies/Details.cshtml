@@ -1,0 +1,32 @@
+﻿@model BookExchangePlatform.Models.Movie
+
+
+<h1>Movie Details</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title
+">
+            @Model.Title
+        </h5>
+        <h6 class="card-subtitle mb-2 text-muted">
+            by @Model.Director
+        </h6>
+        <p class="card-text">
+            <strong>Resume:</strong> @Model.Resume
+        </p>
+        <p class="card-text">
+            <d>Genre:</d> @Model.Genre
+        </p>
+        <p class="card-text">
+            <d>Release Date</d> @Model.ReleaseYear.ToString("MMMM dd, yyyy")
+        </p>
+        <p class="card-text">
+            <strong>Owner:</strong> @(Model.Owner?.FullName ?? "No Owner")
+        </p>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+ -
+</div>
+
+

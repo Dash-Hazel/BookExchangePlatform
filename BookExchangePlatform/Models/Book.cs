@@ -29,7 +29,6 @@ namespace BookExchangePlatform.Models
         [Required]
         public string Condition { get; set; } = "Good";
 
-        public bool IsAvailable { get; set; } = true;
 
         [Required]
         public DateTime DateOfPublishing { get; set; } = DateTime.Now;
@@ -37,8 +36,7 @@ namespace BookExchangePlatform.Models
         //Navigation properties
 
         [Required]
-        [Display(Name = "Owner")]
-        public int OwnerId { get; set; }
+        public string OwnerId { get; set; } = null!;
 
         
         [ForeignKey("OwnerId")]

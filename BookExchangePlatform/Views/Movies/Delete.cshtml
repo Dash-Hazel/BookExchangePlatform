@@ -1,34 +1,30 @@
-﻿@model BookExchangePlatform.Models.Book
+﻿@model BookExchangePlatform.Models.Movie
 
-@* Note: Check if a book has exchanges first *@
 @* A problem occured duruing production. Check again in case of bugs *@
 
 @Html.AntiForgeryToken()
-<h1>Delete Book</h1>
-<h1>Are you certain you would like to delete that book?</h1>
+<h1>Delete Movie</h1>
+<h1>Are you certain you would like to delete that movie?</h1>
 <div class="card">
     <div class="card-body">
         <h5 class=" card-title">
-@Model.Title
+            @Model.Title
         </h5>
         <h6 class="card-subtitle mb-2 text-muted">
-            by @Model.Author
+            by @Model.Director
         </h6>
         <p class="card-text">
-            Description: @Model.Description
+            Resume: @Model.Resume
         </p>
         <p class="card-text">
             Genre: @Model.Genre
         </p>
         <p class="card-text">
-            Condition: @Model.Condition
+            Release Date: @Model.ReleaseYear.ToString("MMMM dd, yyyy")
         </p>
-        <p class="card-text">
-            Date of Publishing: @Model.DateOfPublishing.ToString("MMMM dd, yyyy")
-            </p>
-        <form asp-action="DeleteConfirmed" method="post">
+        <form asp-action="Delete" method="post">
             <input type="hidden" asp-for="Id" />
-            <input type="submit" value="Delete" class="btn btn-danger" />
+            <button type="submit" class="btn btn-danger">Delete</button>
             <a asp-action="Index" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
