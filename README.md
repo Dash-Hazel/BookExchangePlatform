@@ -67,15 +67,17 @@ The core functionality remains intact, and the namespace was kept to avoid break
 ## 🗄️ Database Setup
 
 Connection string (`appsettings.json`):
-
+```json
 "ConnectionStrings": {
   "DefaultConnection": "Server=localhost,1433;Database=PovPlatform;User Id=sa;Password=Ldeyvis123;TrustServerCertificate=True;"
 }
 dotnet ef migrations add InitialCreate
 dotnet ef database update
+```
 
 ---
 ##⚙️ Configuration
+```json
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=localhost,1433;Database=PovPlatform;User Id=sa;Password=Ldeyvis123;TrustServerCertificate=True;"
@@ -87,6 +89,7 @@ dotnet ef database update
     }
   }
 }
+```
 ⚠️ Never commit real passwords to source control. The password above is for local Docker use only.
 
 ---
@@ -147,6 +150,7 @@ Log out when you're done.
 ---
 
 ##🚀 Getting Started
+```bash
 git clone https://github.com/Dash-Hazel/BookExchangePlatform.git
 cd BookExchangePlatform
 
@@ -155,6 +159,7 @@ docker run -d --name sqlserver -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=Ldeyvis1
 dotnet restore
 dotnet ef database update
 dotnet run
+```
 
 💡 If you're using Visual Studio, you can run Update-Database in the Package Manager Console instead of dotnet ef database update.
 
