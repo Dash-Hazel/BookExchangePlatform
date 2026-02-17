@@ -4,7 +4,6 @@
 
 ![.NET Version](https://img.shields.io/badge/.NET-10.0-purple)
 ![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-10.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
 
