@@ -19,6 +19,8 @@ namespace BookExchangePlatform.Data
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Wishlist> WishLists{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,6 +38,18 @@ namespace BookExchangePlatform.Data
               .WithMany(u => u.Books)
              .HasForeignKey(b => b.OwnerId)
              .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Owner)
+                .WithMany(u => u.Reviews)
+                .HasForeignKey(r => r.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Wishlist>()
+                .HasOne(w => w.User)
+                .WithMany(u => u.WishLists)
+                .HasForeignKey(w => w.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
 
 

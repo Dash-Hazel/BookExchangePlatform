@@ -28,6 +28,11 @@
         public const int GenreMinLength = 3;
         public const int GenreMaxLength = 30;
 
+        //Review
+        public const int ReviewTitleMinLength = 3;
+        public const int ReviewTitleMaxLength = 300;
+        public const int ReviewMinRating = 0;
+        public const int ReviewMaxRating = 5;
 
         // Error messages section
         public const string RequiredFieldErrorMessage = "{0} is required.";

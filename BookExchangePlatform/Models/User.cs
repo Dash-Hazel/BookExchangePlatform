@@ -25,5 +25,8 @@ namespace BookExchangePlatform.Models
         public ICollection<Movie> Movies { get; set; } = new List<Movie>();
 
         public ICollection<Book> Books { get; set; } = new List<Book>();
+
+        public ICollection<Review> Reviews { get; set; } = new List<Review>();
+        public ICollection<Wishlist> WishLists { get; set; } = new List<Wishlist>();
     }
 }

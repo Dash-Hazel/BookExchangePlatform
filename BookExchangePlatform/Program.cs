@@ -18,6 +18,8 @@ builder.Services.AddDefaultIdentity<BookExchangePlatform.Models.User>(options =>
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IWishListService, WishListService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 var app = builder.Build();
 
 
