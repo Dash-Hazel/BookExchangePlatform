@@ -1,5 +1,6 @@
 using BookExchangePlatform.Data;
 using BookExchangePlatform.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -14,6 +15,14 @@ namespace BookExchangePlatform.Controllers
         public HomeController(BookExchangeDbContext context)
         {
             currContext = context;
+        }
+
+        [AllowAnonymous]
+        public IActionResult Error(int statusCode)
+        {
+            if (statusCode == 404) return View("Error404");
+            else if (statusCode == 500) return View("Error500");
+            return View("Еррор");
         }
 
         public async Task<IActionResult> Index()

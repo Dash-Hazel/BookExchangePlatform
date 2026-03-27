@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookExchangePlatform.Controllers
 {
+    [Authorize]
     public class MoviesController : Controller
     {
         private readonly IMovieService currMovieService;

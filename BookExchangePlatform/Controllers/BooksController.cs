@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 namespace BookExchangePlatform.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
         private readonly IBookService currBookService;
