@@ -36,6 +36,8 @@ namespace BookExchangePlatform.Services
         {
             return await currContext.Movies
                 .Include(m => m.Owner)
+                .Include(m => m.Reviews)
+                .ThenInclude(r => r.Owner)
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
 

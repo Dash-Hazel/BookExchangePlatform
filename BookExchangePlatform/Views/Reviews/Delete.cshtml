@@ -1,30 +1,28 @@
-﻿@model BookExchangePlatform.Models.Movie
+﻿@model BookExchangePlatform.Models.Review
 
-@* A problem occured duruing production. Check again in case of bugs *@
 
 @Html.AntiForgeryToken()
-<h1>Delete Movie</h1>
-<h1>Are you certain you would like to delete that movie?</h1>
+<h1>Delete a Review</h1>
+<h2>Are you certain of your deletion?</h2>
 <div class="card">
     <div class="card-body">
-        <h5 class=" card-title">
-            @Model.Title
-        </h5>
+
         <h6 class="card-subtitle mb-2 text-muted">
-            by @Model.Director
+            Content: 
+            @Model.Content
         </h6>
         <p class="card-text">
-            Resume: @Model.Resume
+            Rating: @Model.Rating
         </p>
         <p class="card-text">
-            Genre: @Model.Genre
-        </p>
-        <p class="card-text">
-            Release Date: @Model.ReleaseYear.ToString("MMMM dd, yyyy")
+            Date of Publishing: @Model.CreatedAt
         </p>
         <form asp-action="DeleteConfirmed" method="post">
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="BookId" />
+            <input type="hidden" asp-for="MovieId" />
             <button type="submit" class="btn btn-danger">Delete</button>
             <a asp-action="Index" class="btn btn-secondary">Cancel</a>
         </form>
     </div>
+</div>

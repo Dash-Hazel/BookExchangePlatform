@@ -38,6 +38,8 @@ namespace BookExchangePlatform.Services
         {
             return await currContext.Books
                 .Include(b => b.Owner)
+                .Include(b => b.Reviews)
+                .ThenInclude(r => r.Owner)
                 .FirstOrDefaultAsync(b => b.Id == id);
         }
 

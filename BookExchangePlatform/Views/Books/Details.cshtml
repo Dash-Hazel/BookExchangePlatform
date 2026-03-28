@@ -1,5 +1,5 @@
 ﻿@model BookExchangePlatform.Models.Book
-
+@inject Microsoft.AspNetCore.Identity.UserManager<BookExchangePlatform.Models.User> UserManager
 @* There was a bug where it didn`t show the books owner *@
 
 <h1>Book Details</h1>
@@ -27,10 +27,43 @@
         <p class="card-text">
             <strong>Owner:</strong> @(Model.Owner?.FullName?? "No Owner")
         </p>
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
         <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+
     </div>
-    -
+    
 </div>
+
+<hr />
+<h3>Reviews</h3>
+
+<a asp-controller="Reviews" asp-action="Create"
+   asp-route-bookId="@Model.Id"
+   class="btn btn-primary mb-3">Write a Review</a>
+
+@if (Model.Reviews.Any())
+{
+    foreach (var review in Model.Reviews)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <h6>@review.Owner.FullName — @review.Rating / 5 ⭐</h6>
+                <p>@review.Content</p>
+                <small class="text-muted">
+                    @review.CreatedAt.ToString("dd MMM yyyy")
+                </small>
+                @if (review.OwnerId == UserManager.GetUserId(User))
+                {
+                    <a asp-controller="Reviews" asp-action="Delete"
+                       asp-route-id="@review.Id"
+                       class="btn btn-danger btn-sm ms-2">Delete</a>
+                }
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p class="text-muted">No reviews yet. Be the first!</p>
+}
 
 

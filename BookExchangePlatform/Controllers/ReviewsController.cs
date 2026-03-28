@@ -23,46 +23,52 @@ namespace BookExchangePlatform.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Create()
+        public IActionResult Create(int? bookId, int? movieId)
         {
+            ViewBag.bookId = bookId;
+            ViewBag.movieId = movieId;  
             return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Review review)
-        {
-            
-
-            ModelState.Remove("Owner");
-
-            if (review.CreatedAt == default)
-            {
-                review.CreatedAt = DateTime.Now;
-            }
-
-            if (ModelState.IsValid)
-            {
-                review.OwnerId = userManager.GetUserId(User);
-                await currReviewService.CreateReviewAsync(review);
-                if (review.BookId == null)
-                    return RedirectToAction("Details", "Movies", new { id = review.MovieId });
-
-                else
-                    return RedirectToAction("Details", "Books", new { id = review.BookId });
-            }
-
-
-            return View(review);
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
 
+            if (id == null) return NotFound();
+
             var review = await currReviewService.GetReviewByIdAsync(id.Value);
 
             if (review == null) return NotFound();
+
+            var userId = userManager.GetUserId(User);
+            if (review.OwnerId != userId)
+                return Forbid();
+
+            return View(review);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Review review)
+        {
+            ModelState.Remove("Owner");
+            ModelState.Remove("Book");
+            ModelState.Remove("Movie");
+            ModelState.Remove("OwnerId");
+
+            review.OwnerId = userManager.GetUserId(User);
+            review.CreatedAt = DateTime.Now;
+
+            if (ModelState.IsValid)
+            {
+                await currReviewService.CreateReviewAsync(review);
+
+                if (review.BookId == null)
+                    return RedirectToAction("Details", "Movies", new { id = review.MovieId });
+                else
+                    return RedirectToAction("Details", "Books", new { id = review.BookId });
+            }
 
             return View(review);
         }

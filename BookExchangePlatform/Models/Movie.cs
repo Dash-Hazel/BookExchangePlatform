@@ -38,5 +38,7 @@ namespace BookExchangePlatform.Models
 
         [ForeignKey("OwnerId")]
         public User Owner { get; set; } = null!;
+
+        public ICollection<Review> Reviews = new List<Review>();
     }
 }

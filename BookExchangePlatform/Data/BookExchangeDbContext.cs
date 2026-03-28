@@ -40,6 +40,18 @@ namespace BookExchangePlatform.Data
              .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Review>()
+                .HasOne(r => r.Book)
+                .WithMany(u => u.Reviews)
+                .HasForeignKey(r => r.BookId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Movie)
+                .WithMany(u => u.Reviews)
+                .HasForeignKey(r => r.MovieId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Review>()
                 .HasOne(r => r.Owner)
                 .WithMany(u => u.Reviews)
                 .HasForeignKey(r => r.OwnerId)

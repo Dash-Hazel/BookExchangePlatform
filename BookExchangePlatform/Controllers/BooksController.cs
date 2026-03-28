@@ -154,8 +154,8 @@ namespace BookExchangePlatform.Controllers
         }
 
         public async Task<IActionResult> Details(int? id)
-        {          
-
+        {
+            ViewBag.BookId = id;
             if (id == null)
             {
                 return NotFound();
