@@ -6,7 +6,7 @@ namespace BookExchangePlatform.Services.Interfaces
     public interface IBookService
     {
         Task<Book?> GetBookByIdAsync(int id);
-        Task<List<Book>> GetAllBooksAsync();
+        Task<List<Book>> GetAllBooksAsync(string? search = null, int page = 1, int pageSize = 10);
         Task<Book> CreateBookAsync(Book book);
         Task<Book> UpdateBookAsync(int id, Book book);
         Task<bool> DeleteBookAsync(int id);

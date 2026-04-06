@@ -38,9 +38,19 @@ namespace BookExchangePlatform.Controllers
             ViewBag.Users = userList;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search, int page = 1)
         {
-            var movies = await currMovieService.GetAllMoviesAsync();
+            var query = currContext.Movies.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(b => b.Title.Contains(search) || b.Director.Contains(search));
+            }
+            ViewBag.Search = search;
+            ViewBag.Page = page;
+            ViewBag.TotalPages = (int)Math.Ceiling(await currContext.Movies.CountAsync() / 10.0);
+
+            var movies = await currMovieService.GetAllMoviesAsync(search, page);
             return View(movies);
         }
 

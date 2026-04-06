@@ -20,11 +20,19 @@ namespace BookExchangePlatform.Services
         {
             currContext = context;
         }
-        public async Task<List<Book>> GetAllBooksAsync()
+        public async Task<List<Book>> GetAllBooksAsync(string? search = null, int page = 1, int pageSize = 10)
         {
-            return await currContext.Books
+            var query =  currContext.Books
                   .Include(b => b.Owner)
-                  .ToListAsync();
+                  .AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))  //Searching
+                 query = query.Where(b => b.Title.Contains(search) || b.Author.Contains(search));
+                
+                //Pagination
+                query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return await query.ToListAsync();
         }
 
         public async Task<Book?> GetBookByIdAsync(int id)

@@ -5,7 +5,7 @@ namespace BookExchangePlatform.Services.Interfaces
     public interface IMovieService
     {
         Task<Movie?> GetMovieByIdAsync(int id);
-        Task<List<Movie>> GetAllMoviesAsync();
+        Task<List<Movie>> GetAllMoviesAsync(string? search = null, int page = 1, int pageSize = 10);
         Task<Movie> CreateMovieAsync(Movie movie);
         Task<Movie> UpdateMovieAsync(int id, Movie movie);
         Task<bool> DeleteMovieAsync(int id);

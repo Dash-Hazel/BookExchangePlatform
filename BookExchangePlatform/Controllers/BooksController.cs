@@ -41,9 +41,19 @@ namespace BookExchangePlatform.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search, int page = 1)
         {
-            var books = await currBookService.GetAllBooksAsync();
+            var query = currContext.Books.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(b => b.Title.Contains(search) || b.Author.Contains(search));
+            }
+            ViewBag.Search = search;
+            ViewBag.Page = page;
+            ViewBag.TotalPages = (int)Math.Ceiling(await currContext.Books.CountAsync() / 10.0);
+
+            var books = await currBookService.GetAllBooksAsync(search, page);
             return View(books);
         }
 

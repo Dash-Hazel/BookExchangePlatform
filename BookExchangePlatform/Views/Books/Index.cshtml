@@ -6,6 +6,10 @@
     <a asp-action="Create" class="btn btn-primary btn-outline-info">Create New</a>
 </p>
 
+<form method="get" asp-action="Index">
+    <input type="text" name="search" value="@ViewBag.Search" class="form-control" placeholder="Search books..." />
+    <button type= "submit" class="btn btn-primary">Search</button>
+</form>
 
 <table class="table table-bordered">
     <thead>
@@ -33,6 +37,20 @@
         }
     </tbody>
 </table>
+
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(i == ViewBag.Page ? "active" : "")">
+                <a class="page-link"
+                   asp-action="Index"
+                   asp-route-page="@i"
+                   asp-route-search="@ViewBag.Search">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
 
 @if (!Model.Any())
 {

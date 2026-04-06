@@ -18,11 +18,19 @@ namespace BookExchangePlatform.Services
             currContext = context;
         }
 
-        public async Task<List<Movie>> GetAllMoviesAsync()
+        public async Task<List<Movie>> GetAllMoviesAsync(string? search = null, int page = 1, int pageSize = 10)
         {
-            return await currContext.Movies
-                  .Include(m => m.Owner)
-                  .ToListAsync();
+            var query = currContext.Movies
+                  .Include(b => b.Owner)
+                  .AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))  //Searching
+                query = query.Where(b => b.Title.Contains(search) || b.Director.Contains(search));
+
+            //Pagination
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
+            return await query.ToListAsync();
         }
 
         public async Task<Movie?> GetMovieByIdAsync(int id)
