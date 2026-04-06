@@ -1,6 +1,7 @@
 using BookExchangePlatform.Data;
 using BookExchangePlatform.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -11,10 +12,12 @@ namespace BookExchangePlatform.Controllers
     {
 
         private readonly BookExchangeDbContext currContext;
+        private readonly SignInManager<User> ssignInManager;
 
-        public HomeController(BookExchangeDbContext context)
+        public HomeController(BookExchangeDbContext context, SignInManager<User> signInManager)
         {
             currContext = context;
+            ssignInManager = signInManager;
         }
 
         [AllowAnonymous]
@@ -50,6 +53,14 @@ namespace BookExchangePlatform.Controllers
                 return View(viewModel);
             }
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await ssignInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,18 @@
+﻿@model List<BookExchangePlatform.Models.User>
+
+    <h1> Admin Dashboard </h1>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text display-4">@Model.Count</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<a asp-action="Users" class="btn btn-primary mt-3">Manage Users</a>

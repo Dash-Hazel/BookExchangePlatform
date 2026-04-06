@@ -1,4 +1,12 @@
 ﻿<!DOCTYPE html>
+@inject Microsoft.AspNetCore.Identity.SignInManager<BookExchangePlatform.Models.User> SignInManager
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+{
+    <a asp-area="Admin" asp-controller="Admin" asp-action="Index" class="nav-link">Admin Panel</a>
+}
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8" />

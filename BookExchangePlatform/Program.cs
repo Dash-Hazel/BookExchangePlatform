@@ -1,19 +1,29 @@
 using BookExchangePlatform.Data;
+using BookExchangePlatform.Models;
 using BookExchangePlatform.Services;
 using BookExchangePlatform.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BookExchangeDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<BookExchangePlatform.Models.User>(options => options.SignIn.RequireConfirmedAccount = true)
-     .AddEntityFrameworkStores<BookExchangeDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+})
+.AddEntityFrameworkStores<BookExchangeDbContext>()
+.AddDefaultTokenProviders();
+
+
 
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IMovieService, MovieService>();
@@ -26,21 +36,46 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<BookExchangeDbContext>();
+    var services = scope.ServiceProvider;
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-
-    // Seed
-    if (!dbContext.Users.Any())
+    // Seed roles
+    string[] roles = { "Administrator", "User" };
+    foreach (var role in roles)
     {
-        dbContext.Users.Add(new BookExchangePlatform.Models.User
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
+
+    // Seed admin user
+    if (await userManager.FindByEmailAsync("admin@admin.com") == null)
+    {
+        var admin = new User
         {
-            FirstName = "Johnson",
-            LastName = "McCall",
-            Email = "test@test.com",
-            PhoneNumber = "1234567890",
-        });
-        dbContext.SaveChanges();
-        Console.WriteLine("Seed user created with ID: 1");
+            UserName = "admin@admin.com",
+            Email = "admin@admin.com",
+            FirstName = "Admin",
+            LastName = "User",
+            EmailConfirmed = true
+        };
+        await userManager.CreateAsync(admin, "Admin1234");
+        await userManager.AddToRoleAsync(admin, "Administrator");
+    }
+
+    // Seed regular user
+    if (await userManager.FindByEmailAsync("user@user.com") == null)
+    {
+        var user = new User
+        {
+            UserName = "user@user.com",
+            Email = "user@user.com",
+            FirstName = "Regular",
+            LastName = "User",
+            EmailConfirmed = true
+        };
+        await userManager.CreateAsync(user, "User1234");
+        await userManager.AddToRoleAsync(user, "User");
     }
 }
 
@@ -65,10 +100,17 @@ app.MapRazorPages();
 
 app.MapStaticAssets();
 
+
+app.MapControllerRoute(
+    name: "Admin",
+    pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+
 
 
 app.Run();
