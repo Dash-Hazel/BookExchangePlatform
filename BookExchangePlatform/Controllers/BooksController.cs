@@ -15,12 +15,13 @@ namespace BookExchangePlatform.Controllers
     {
         private readonly IBookService currBookService;
         private readonly BookExchangeDbContext currContext;
+        private readonly UserManager<User> userrManager;
 
-
-        public BooksController(IBookService bookService, BookExchangeDbContext context)
+        public BooksController(IBookService bookService, BookExchangeDbContext context, UserManager<User> userManager)
         {
             currBookService = bookService;
             currContext = context;
+            userrManager = userManager;
         }
 
         private void PopulateUsersDropdown()
@@ -100,6 +101,10 @@ namespace BookExchangePlatform.Controllers
                 return NotFound();
             }
 
+            var userId = userrManager.GetUserId(User);
+            if (book.OwnerId != userId)
+                return Forbid();
+
             PopulateUsersDropdown();
             return View(book);
 
@@ -149,6 +154,10 @@ namespace BookExchangePlatform.Controllers
                 return NotFound();
             }
 
+            var userId = userrManager.GetUserId(User);
+            if (book.OwnerId != userId)
+                return Forbid();
+
             return View(book);
         }
 
@@ -156,10 +165,16 @@ namespace BookExchangePlatform.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Console.WriteLine($"DeleteConfirmed HIT with id: {id}");
+            var book = await currBookService.GetBookByIdAsync(id);
+            if (book == null) return NotFound();
 
+            var userId = userrManager.GetUserId(User);
+            if (book.OwnerId != userId)
+            {
+
+            }
+                return Forbid();
             await currBookService.DeleteBookAsync(id);
-
             return RedirectToAction(nameof(Index));
         }
 

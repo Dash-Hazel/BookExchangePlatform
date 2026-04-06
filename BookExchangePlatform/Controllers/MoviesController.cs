@@ -14,11 +14,13 @@ namespace BookExchangePlatform.Controllers
     {
         private readonly IMovieService currMovieService;
         private readonly BookExchangeDbContext currContext;
+        private readonly UserManager<User> userrManager;
 
-        public MoviesController(IMovieService movieService, BookExchangeDbContext context)
+        public MoviesController(IMovieService movieService, BookExchangeDbContext context, UserManager<User> userManager)
         {
             currMovieService = movieService;
             currContext = context;
+            userrManager = userManager;
         }
 
         private void PopulateUsersDropdown()
@@ -97,6 +99,10 @@ namespace BookExchangePlatform.Controllers
                 return NotFound();
             }
 
+            var userId = userrManager.GetUserId(User);
+            if (movie.OwnerId != userId)
+                return Forbid();
+
             PopulateUsersDropdown();
             return View(movie);
 
@@ -146,6 +152,10 @@ namespace BookExchangePlatform.Controllers
                 return NotFound();
             }
 
+            var userId = userrManager.GetUserId(User);
+            if (movie.OwnerId != userId)
+                return Forbid();
+
             return View(movie);
         }
 
@@ -153,9 +163,14 @@ namespace BookExchangePlatform.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var movie = await currMovieService.GetMovieByIdAsync(id);
+            if (movie == null) return NotFound();
+
+            var userId = userrManager.GetUserId(User);
+            if (movie.OwnerId != userId)
+                return Forbid();
 
             await currMovieService.DeleteMovieAsync(id);
-
             return RedirectToAction(nameof(Index));
         }
 
