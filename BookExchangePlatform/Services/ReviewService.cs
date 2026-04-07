@@ -2,6 +2,7 @@
 using BookExchangePlatform.Services.Interfaces;
 using BookExchangePlatform.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace BookExchangePlatform.Services
 {
@@ -32,6 +33,11 @@ namespace BookExchangePlatform.Services
 
         public async Task<Review?> GetReviewByIdAsync(int id)
         {
+            if (id == null)
+            {
+                throw new ArgumentException("Not Found");
+            }
+
             return await currContext.Reviews
                 .Where(r => r.Id == id)
                 .Include(r => r.Owner)

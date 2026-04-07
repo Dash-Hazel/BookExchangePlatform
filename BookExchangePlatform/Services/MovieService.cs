@@ -3,6 +3,7 @@ using BookExchangePlatform.Models;
 using BookExchangePlatform.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace BookExchangePlatform.Services
 {
@@ -105,9 +106,15 @@ namespace BookExchangePlatform.Services
 
         public async Task<bool> DeleteMovieAsync(int id)
         {
+
             var movie = await currContext.Movies
                 .Where(m => m.Id == id)
                 .FirstOrDefaultAsync();
+
+            if (movie == null)
+            {
+                return false;
+            }
 
             currContext.Movies.Remove(movie);
             await currContext.SaveChangesAsync();
