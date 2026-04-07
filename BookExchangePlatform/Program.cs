@@ -3,6 +3,7 @@ using BookExchangePlatform.Models;
 using BookExchangePlatform.Services;
 using BookExchangePlatform.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,15 +15,16 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<BookExchangeDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddIdentity<User, IdentityRole>(options =>
+builder.Services.AddDefaultIdentity<User>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = false;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireUppercase = false;
+options.SignIn.RequireConfirmedAccount = false;
+options.SignIn.RequireConfirmedEmail = false;
+options.Password.RequireNonAlphanumeric = false;
+options.Password.RequireUppercase = false;
 })
-.AddEntityFrameworkStores<BookExchangeDbContext>()
-.AddDefaultTokenProviders();
-
+.AddRoles<IdentityRole>()
+.AddEntityFrameworkStores<BookExchangeDbContext>();
+builder.Services.AddSingleton<IEmailSender, FakeEmailSender>();
 
 
 builder.Services.AddScoped<IBookService, BookService>();
@@ -30,7 +32,11 @@ builder.Services.AddScoped<IMovieService, MovieService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWishListService, WishListService>();
 builder.Services.AddScoped<IReviewService, ReviewService>();
+
+
 var app = builder.Build();
+
+
 
 
 
