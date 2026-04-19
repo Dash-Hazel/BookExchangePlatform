@@ -130,6 +130,37 @@ SQL Server with Entity Framework Core (Code First)
 Docker support for local SQL Server
 
 ---
+## 🏗️ Architecture
+
+The project follows a layered MVC architecture:
+
+- **Controllers** — handle HTTP requests and return views
+- **Services** — contain all business logic, injected via interfaces
+- **Models** — entity classes mapped to the database via EF Core
+- **Views** — Razor templates with partial views and layout sections
+- **Areas** — Admin area for administrator-only functionality, Identity area for authentication
+- **Data** — DbContext and migrations
+
+## 🔒 Validation & Security
+
+- Server-side validation using Data Annotations on all models
+- Client-side validation via jQuery Validation
+- AntiForgeryToken on all POST actions to prevent CSRF
+- Role-based authorization — admin routes require the Administrator role
+- Users can only edit or delete their own books and movies
+- HTML special characters are automatically escaped by Razor
+
+## 🧪 Test Coverage
+
+Unit tests are written using xUnit and cover the following services:
+- BookService
+- MovieService
+- ReviewService
+- UserService
+- WishListService
+
+Run tests with:
+---
 
 #💻 Usage
 Register a new account (first and last name required).
