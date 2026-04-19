@@ -208,6 +208,10 @@ This project was developed as a final assignment for the ASP.NET Fundamentals co
 Educational use only. All rights reserved.
 
 ---
+## 🚀 Deployment
+
+*Coming soon — will be deployed to Azure.*
+---
 
 #📬 Contact
 GitHub: @Dash-Hazel
