@@ -83,6 +83,29 @@ using (var scope = app.Services.CreateScope())
         await userManager.CreateAsync(user, "User1234");
         await userManager.AddToRoleAsync(user, "User");
     }
+
+    var db = services.GetRequiredService<BookExchangeDbContext>();
+    var seedUser = await userManager.FindByEmailAsync("user@user.com");
+
+    if (!db.Books.Any())
+    {
+        db.Books.AddRange(
+            new Book { Title = "1984", Author = "George Orwell", Description = "A dystopian novel.", Genre = "Dystopia", Condition = "Good", DateOfPublishing = new DateTime(1949, 6, 8), OwnerId = seedUser!.Id },
+            new Book { Title = "The Hobbit", Author = "J.R.R. Tolkien", Description = "A fantasy adventure.", Genre = "Fantasy", Condition = "Good", DateOfPublishing = new DateTime(1937, 9, 21), OwnerId = seedUser!.Id },
+            new Book { Title = "To Kill a Mockingbird", Author = "Harper Lee", Description = "A story of justice.", Genre = "Drama", Condition = "Good", DateOfPublishing = new DateTime(1960, 7, 11), OwnerId = seedUser!.Id }
+        );
+        await db.SaveChangesAsync();
+    }
+
+    if (!db.Movies.Any())
+    {
+        db.Movies.AddRange(
+            new Movie { Title = "Inception", Director = "Christopher Nolan", ReleaseYear = new DateTime(2010, 7, 16), Genre = "Sci-Fi", Resume = "A thief enters dreams to steal secrets.", OwnerId = seedUser!.Id },
+            new Movie { Title = "The Godfather", Director = "Francis Ford Coppola", ReleaseYear = new DateTime(1972, 3, 24), Genre = "Crime", Resume = "A mafia family drama.", OwnerId = seedUser!.Id },
+            new Movie { Title = "Interstellar", Director = "Christopher Nolan", ReleaseYear = new DateTime(2014, 11, 7), Genre = "Sci-Fi", Resume = "Astronauts search for a new home for humanity.", OwnerId = seedUser!.Id }
+        );
+        await db.SaveChangesAsync();
+    }
 }
 
 

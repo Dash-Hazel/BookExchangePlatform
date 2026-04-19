@@ -171,9 +171,9 @@ namespace BookExchangePlatform.Controllers
             var userId = userrManager.GetUserId(User);
             if (book.OwnerId != userId)
             {
-
-            }
                 return Forbid();
+            }
+                
             await currBookService.DeleteBookAsync(id);
             return RedirectToAction(nameof(Index));
         }
