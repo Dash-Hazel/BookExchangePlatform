@@ -63,7 +63,7 @@ The core functionality remains intact, and the namespace was kept to avoid break
 
 ---
 
-#🗄️ Database Setup
+# 🗄️ Database Setup
 
 Connection string (`appsettings.json`):
 ```json
@@ -160,6 +160,8 @@ Unit tests are written using xUnit and cover the following services:
 - WishListService
 
 Run tests with:
+- Visual Studio: open Test Explorer (Test → Test Explorer) and click Run All
+- Terminal: `dotnet test`
 ---
 
 #💻 Usage
