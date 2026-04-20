@@ -1,10 +1,7 @@
 ﻿<!DOCTYPE html>
 @inject Microsoft.AspNetCore.Identity.SignInManager<BookExchangePlatform.Models.User> SignInManager
 
-@if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
-{
-    <a asp-area="Admin" asp-controller="Admin" asp-action="Index" class="nav-link">Admin Panel</a>
-}
+
 
 
 <html lang="en">
@@ -34,6 +31,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
+@if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+{
+    <a asp-area="Admin" asp-controller="Admin" asp-action="Index" class="nav-link">Admin Panel</a>
+}
+
+
                     </ul>
                     @if (User.Identity.IsAuthenticated)
                         {
