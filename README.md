@@ -112,34 +112,64 @@ BookExchangePlatform/
 ```
 ---
 
-#✨ Features
-User registration and login (ASP.NET Core Identity with custom User model)
+## ✨ Features
 
-Full CRUD operations for Books and Movies
+### Core Functionality
 
-Personal "My Publications" page showing only the logged‑in user's items
+* 🔐 User authentication (ASP.NET Core Identity with custom user model)
+* 📚 Full CRUD operations for Books
+* 🎬 Full CRUD operations for Movies
+* 👤 Personal “My Publications” dashboard
 
-Role‑based access control (public vs. authenticated users)
+### Advanced Features (ASP.NET Advanced)
 
-Input validation (server‑side & client‑side)
+* 📝 Review system for books and movies
+* 🔍 Search and filtering functionality
+* 📄 Pagination for large data sets
+* 🛡️ Role-based authorization (Admin & User)
+* 🌱 Database seeding with initial data
+* ⚠️ Custom error pages (404 & 500)
 
-Responsive UI with Bootstrap
+### Technical Features
 
-SQL Server with Entity Framework Core (Code First)
+* ✅ Server-side and client-side validation
+* 📱 Responsive UI using Bootstrap 5
+* 🗄️ SQL Server with Entity Framework Core (Code First)
+* 🐳 Docker support for local database setup
 
-Docker support for local SQL Server
+
+---
+## 🆕 What’s New (ASP.NET Advanced Upgrade)
+
+Compared to the Fundamentals version, the project has been extended with:
+
+* Implementation of a Review system
+* Search and filtering functionality
+* Pagination for improved data handling
+* Database seeding
+* Custom error pages (404 & 500)
+* Improved validation and security
+* Extended unit testing (65%+ coverage)
+* Enhanced architecture and service layer separation
 
 ---
 ## 🏗️ Architecture
 
-The project follows a layered MVC architecture:
+The application follows a layered MVC architecture:
 
-- **Controllers** — handle HTTP requests and return views
-- **Services** — contain all business logic, injected via interfaces
-- **Models** — entity classes mapped to the database via EF Core
-- **Views** — Razor templates with partial views and layout sections
-- **Areas** — Admin area for administrator-only functionality, Identity area for authentication
-- **Data** — DbContext and migrations
+* **Controllers** — handle HTTP requests and responses
+* **Services** — contain business logic and are injected via interfaces
+* **Models** — represent database entities
+* **Views** — Razor templates for UI rendering
+* **Data Layer** — DbContext and migrations
+* **Areas** — Admin and Identity functionality
+
+### Improvements in Advanced Version
+
+* Enhanced service layer with better separation of concerns
+* Increased testability through interface-based design
+* Expanded business logic (Reviews, Search, Pagination)
+
 
 ## 🔒 Validation & Security
 
@@ -162,6 +192,9 @@ Unit tests are written using xUnit and cover the following services:
 Run tests with:
 - Visual Studio: open Test Explorer (Test → Test Explorer) and click Run All
 - Terminal: `dotnet test`
+
+- * ✔ Achieved over 65% code coverage of the service layer (verified through test diagnostics)
+
 ---
 
 #💻 Usage
