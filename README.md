@@ -201,6 +201,14 @@ dotnet run
 
 ---
 
+---
+#🧠 Design Decisions
+Separation of concerns via service layer
+EF Core Code First for flexibility
+Custom Identity user model
+Scope adapted from exchange platform to content manager
+---
+
 #🤝 Contributing
 This project was developed as a final assignment for the ASP.NET Fundamentals course at SoftUni. It is not open for contributions, but feedback is welcome.
 
@@ -209,10 +217,6 @@ This project was developed as a final assignment for the ASP.NET Fundamentals co
 #📄 License
 Educational use only. All rights reserved.
 
----
-## 🚀 Deployment
-
-*Coming soon — will be deployed to Azure.*
 ---
 
 #📬 Contact
