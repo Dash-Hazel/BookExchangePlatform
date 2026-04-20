@@ -78,7 +78,7 @@ dotnet ef database update
 
 
 ---
-#⚙️ Configuration
+# ⚙️ Configuration
 ```json
 {
   "ConnectionStrings": {
@@ -96,7 +96,7 @@ dotnet ef database update
 
 ---
 
-#📁 Project Structure
+# 📁 Project Structure
 ```text
 BookExchangePlatform/
 ├── Controllers/
@@ -197,7 +197,7 @@ Run tests with:
 
 ---
 
-#💻 Usage
+# 💻 Usage
 Register a new account (first and last name required).
 
 Log in with your credentials.
@@ -218,7 +218,7 @@ Log out when you're done.
 
 ---
 
-#🚀 Getting Started
+# 🚀 Getting Started
 ```bash
 git clone https://github.com/Dash-Hazel/BookExchangePlatform.git
 cd BookExchangePlatform
@@ -235,24 +235,24 @@ dotnet run
 ---
 
 ---
-#🧠 Design Decisions
+# 🧠 Design Decisions
 Separation of concerns via service layer
 EF Core Code First for flexibility
 Custom Identity user model
 Scope adapted from exchange platform to content manager
 ---
 
-#🤝 Contributing
+# 🤝 Contributing
 This project was developed as a final assignment for the ASP.NET Fundamentals course at SoftUni. It is not open for contributions, but feedback is welcome.
 
 ---
 
-#📄 License
+# 📄 License
 Educational use only. All rights reserved.
 
 ---
 
-#📬 Contact
+# 📬 Contact
 GitHub: @Dash-Hazel
 
 Project Link: https://github.com/Dash-Hazel/BookExchangePlatform
